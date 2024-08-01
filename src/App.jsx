@@ -6,11 +6,11 @@ import Error from "./ui/Error";
 import Menu from "./features/menu/Menu";
 import Cart from "./features/cart/Cart";
 import CreateOrder from "./features/order/CreateOrder";
-import createOrderAction from "./features/order/CreateOrderAction";
+import createOrderAction from "./features/order/createOrderAction";
 import Order from "./features/order/Order";
-import orderLoader from "./features/order/OrderLoader";
+import orderLoader from "./features/order/orderLoader";
 import AppLayout from "./ui/AppLayout";
-import menuLoader from "./features/menu/MenuLoader";
+import menuLoader from "./features/menu/menuLoader";
 
 const router = createBrowserRouter([
     {

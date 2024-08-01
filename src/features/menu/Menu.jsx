@@ -6,7 +6,7 @@ import { useLoaderData } from "react-router-dom";
 
 function Menu() {
     const menu = useLoaderData();
-    console.log(menu);
+    // console.log(menu);
 
     return (
         <ul>
