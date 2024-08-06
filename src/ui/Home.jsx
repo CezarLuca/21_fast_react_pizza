@@ -3,7 +3,8 @@ import CreateUser from "../features/user/CreateUser";
 import CustomButton from "./CustomButton";
 
 function Home() {
-    const username = useSelector((state) => state.user.name);
+    const username = useSelector((state) => state.user.username);
+    // console.log("Home username", username);
 
     return (
         <div className="my-10 px-4 text-center sm:my-16">
@@ -14,6 +15,7 @@ function Home() {
                     Straight out of the oven, straight to you.
                 </span>
             </h1>
+            {/* <CreateUser /> */}
             {username === "" ? (
                 <CreateUser />
             ) : (

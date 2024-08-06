@@ -34,7 +34,7 @@ CustomButton.propTypes = {
     children: PropTypes.node.isRequired,
     disabled: PropTypes.bool,
     to: PropTypes.string,
-    type: PropTypes.oneOf(["primary", "small"]).isRequired,
+    type: PropTypes.oneOf(["primary", "small", "secondary"]).isRequired,
 };
 
 export default CustomButton;
