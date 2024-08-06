@@ -33,9 +33,12 @@ const userSlice = createSlice({
         updateName(state, action) {
             state.username = action.payload;
         },
+        logOut(state) {
+            state.username = "";
+        },
     },
 });
 
-export const { updateName } = userSlice.actions;
+export const { updateName, logOut } = userSlice.actions;
 
 export default userSlice.reducer;
