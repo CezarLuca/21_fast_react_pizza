@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import CustomButton from "../../ui/CustomButton";
+import { useSelector } from "react-redux";
 
 // // https://uibakery.io/regex-library/phone-number
 // const isValidPhone = (str) =>
@@ -33,6 +34,7 @@ const fakeCart = [
 ];
 
 function CreateOrder() {
+    const username = useSelector((state) => state.user.name);
     const navigation = useNavigation();
     const isSubmitting = navigation.state === "submitting";
 
@@ -55,6 +57,7 @@ function CreateOrder() {
                         className="input w-auto grow"
                         type="text"
                         name="customer"
+                        defaultValue={username}
                         required
                     />
                 </div>
