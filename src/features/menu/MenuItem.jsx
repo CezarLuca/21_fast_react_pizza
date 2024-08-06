@@ -7,6 +7,10 @@ function formatCurrency(amount) {
         currency: "USD",
     }).format(amount);
 }
+
+function handleAddToCart() {
+    console.log("Add to cart clicked");
+}
 function MenuItem({ pizza }) {
     const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
@@ -30,9 +34,15 @@ function MenuItem({ pizza }) {
                             Sold out
                         </p>
                     )}
-                    <CustomButton type="small" to={"/cart"}>
-                        Add to cart
-                    </CustomButton>
+                    {!soldOut && (
+                        <CustomButton
+                            type="small"
+                            to={"/cart"}
+                            onClick={handleAddToCart}
+                        >
+                            Add to cart
+                        </CustomButton>
+                    )}
                 </div>
             </div>
         </li>
