@@ -60,3 +60,17 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+// These are called selectors. They are used to extract data from the Redux store state.
+// They are used in the components to get the data from the store.
+// They can be optimized using the reselect library.
+// https://redux.js.org/recipes/computing-derived-data
+// https://redux.js.org/recipes/structuring-reducers/reusing-reducer-logic
+// https://redux.js.org/recipes/structuring-reducers/using-memoized-selectors
+// https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
+
+export const getTotalCartQuantity = (state) =>
+    state.cart.cart.reduce((sum, pizza) => sum + pizza.quantity, 0);
+
+export const getTotalCartPrice = (state) =>
+    state.cart.cart.reduce((sum, pizza) => sum + pizza.totalPrice, 0);
