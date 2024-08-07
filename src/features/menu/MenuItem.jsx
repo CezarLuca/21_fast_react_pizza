@@ -1,18 +1,32 @@
 import PropTypes from "prop-types";
 import CustomButton from "../../ui/CustomButton";
+import { useDispatch } from "react-redux";
+import { addItem } from "../cart/cartSlice";
+import { formatCurrency } from "../../utils/helpers";
 
-function formatCurrency(amount) {
-    return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-    }).format(amount);
-}
-
-function handleAddToCart() {
-    console.log("Add to cart clicked");
-}
+// function formatCurrency(amount) {
+//     return new Intl.NumberFormat("en-US", {
+//         style: "currency",
+//         currency: "USD",
+//     }).format(amount);
+// }
 function MenuItem({ pizza }) {
+    const dispatch = useDispatch();
+
     const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+
+    function handleAddToCart() {
+        // console.log(`Add to cart clicked ${id}`);
+
+        const newPizzaItem = {
+            pizzaId: id,
+            name,
+            quantity: 1,
+            unitPrice,
+            totalPrice: unitPrice * 1,
+        };
+        dispatch(addItem(newPizzaItem));
+    }
 
     return (
         <li className="flex gap-4 py-2">
@@ -35,11 +49,7 @@ function MenuItem({ pizza }) {
                         </p>
                     )}
                     {!soldOut && (
-                        <CustomButton
-                            type="small"
-                            to={"/cart"}
-                            onClick={handleAddToCart}
-                        >
+                        <CustomButton type="small" onClick={handleAddToCart}>
                             Add to cart
                         </CustomButton>
                     )}
