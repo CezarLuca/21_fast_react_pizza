@@ -69,6 +69,8 @@ export default cartSlice.reducer;
 // https://redux.js.org/recipes/structuring-reducers/using-memoized-selectors
 // https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
 
+export const getCart = (state) => state.cart.cart;
+
 export const getTotalCartQuantity = (state) =>
     state.cart.cart.reduce((sum, pizza) => sum + pizza.quantity, 0);
 
