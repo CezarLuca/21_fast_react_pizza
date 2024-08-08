@@ -91,7 +91,7 @@ function Username() {
     //     );
 
     return (
-        <div className="relative px-16 text-sm font-semibold md:block">
+        <div className="relative pr-10 text-sm font-semibold md:block">
             <button
                 onClick={() => {
                     dispatch(showLogOut());
