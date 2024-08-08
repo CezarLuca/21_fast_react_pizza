@@ -3,8 +3,11 @@ import { Form, useActionData, useNavigation } from "react-router-dom";
 import CustomButton from "../../ui/CustomButton";
 import { useSelector } from "react-redux";
 import { getUsername } from "../user/userSlice";
-import { getCart } from "../cart/cartSlice";
+import { getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
+import { formatCurrency } from "../../utils/helpers";
+import { useState } from "react";
+// import store from "../../store";
 
 // // https://uibakery.io/regex-library/phone-number
 // const isValidPhone = (str) =>
@@ -37,6 +40,7 @@ import EmptyCart from "../cart/EmptyCart";
 // ];
 
 function CreateOrder() {
+    const [withPriority, setWithPriority] = useState(false);
     // const username = useSelector((state) => state.user.username);
     const username = useSelector(getUsername);
     const navigation = useNavigation();
@@ -44,10 +48,12 @@ function CreateOrder() {
 
     const formErrors = useActionData();
 
-    // const [withPriority, setWithPriority] = useState(false);
     // const cart = fakeCart;
     const cart = useSelector(getCart);
-    console.log("cart", cart);
+    // console.log("cart", cart);
+    const totalCartPrice = useSelector(getTotalCartPrice);
+    const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
+    const totalPrice = totalCartPrice + priorityPrice;
 
     if (!cart.length) {
         return <EmptyCart />;
@@ -113,8 +119,8 @@ function CreateOrder() {
                         type="checkbox"
                         name="priority"
                         id="priority"
-                        // value={withPriority}
-                        // onChange={(e) => setWithPriority(e.target.checked)}
+                        value={withPriority}
+                        onChange={(e) => setWithPriority(e.target.checked)}
                     />
                     <label htmlFor="priority" className="font-medium">
                         Want to yo give your order priority?
@@ -128,7 +134,9 @@ function CreateOrder() {
                         value={JSON.stringify(cart)}
                     />
                     <CustomButton disabled={isSubmitting} type="primary">
-                        {isSubmitting ? "Placing order..." : "Order now"}
+                        {isSubmitting
+                            ? "Placing order..."
+                            : `Order now for ${formatCurrency(totalPrice)}`}
                     </CustomButton>
                     {/* <button
                         disabled={isSubmitting}
