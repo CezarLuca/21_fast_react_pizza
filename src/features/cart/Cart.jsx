@@ -37,7 +37,7 @@ function Cart() {
     const username = useSelector(getUsername);
     // const cart = fakeCart;
     const cart = useSelector(getCart);
-    console.log(cart);
+    // console.log(cart);
     const dispatch = useDispatch();
 
     function handleClearCart() {

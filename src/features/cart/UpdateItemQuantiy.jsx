@@ -3,7 +3,7 @@ import CustomButton from "../../ui/CustomButton";
 import { useDispatch } from "react-redux";
 import { decreaseItemQuantity, increaseItemQuantity } from "./cartSlice";
 
-function UpdateItemQuantiy({ pizzaId }) {
+function UpdateItemQuantiy({ pizzaId, currentQuantity }) {
     const dispatch = useDispatch();
 
     function handleDecrement() {
@@ -19,6 +19,7 @@ function UpdateItemQuantiy({ pizzaId }) {
             <CustomButton type="round" onClick={handleDecrement}>
                 -
             </CustomButton>
+            <span className="text-sm font-medium">{currentQuantity}</span>
             <CustomButton type="round" onClick={handleIncrement}>
                 +
             </CustomButton>
@@ -28,6 +29,7 @@ function UpdateItemQuantiy({ pizzaId }) {
 
 UpdateItemQuantiy.propTypes = {
     pizzaId: PropTypes.number.isRequired,
+    currentQuantity: PropTypes.number.isRequired,
 };
 
 export default UpdateItemQuantiy;

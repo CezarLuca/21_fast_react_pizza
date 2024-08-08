@@ -21,5 +21,5 @@ export function calcMinutesLeft(dateStr) {
 }
 
 export function randomIntegerGenerator(min, max) {
-    return Math.floor(10000 * Math.random() * (max - min + 1)) + min;
+    return Math.floor(100000 * Math.random() * (max - min + 1)) + min;
 }

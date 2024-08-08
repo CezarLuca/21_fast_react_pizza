@@ -3,9 +3,13 @@ import { formatCurrency } from "../../utils/helpers";
 // import CustomButton from "../../ui/CustomButton";
 import DeleteItem from "./DeleteItem";
 import UpdateItemQuantiy from "./UpdateItemQuantiy";
+import { useSelector } from "react-redux";
+import { getCurrentCartQuantity } from "./cartSlice";
 
 function CartItem({ item }) {
     const { pizzaId, name, quantity, totalPrice } = item;
+    const currentQuantity = useSelector(getCurrentCartQuantity(pizzaId));
+    // console.log(currentQuantity);
 
     return (
         <li className="py-3 sm:flex sm:items-center sm:justify-between">
@@ -17,7 +21,10 @@ function CartItem({ item }) {
                     {formatCurrency(totalPrice)}
                 </p>
                 {/* <CustomButton type="small">Remove</CustomButton> */}
-                <UpdateItemQuantiy pizzaId={pizzaId} />
+                <UpdateItemQuantiy
+                    pizzaId={pizzaId}
+                    currentQuantity={currentQuantity}
+                />
                 <DeleteItem pizzaId={pizzaId} />
             </div>
         </li>
