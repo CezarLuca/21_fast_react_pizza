@@ -6,6 +6,7 @@ import {
     calcMinutesLeft,
     formatCurrency,
     formatDate,
+    randomIntegerGenerator,
 } from "../../utils/helpers";
 import OrderItem from "./OrderItem";
 
@@ -89,7 +90,10 @@ function Order() {
 
             <ul className="divide-y divide-stone-200 border-b border-t">
                 {cart.map((item) => (
-                    <OrderItem item={item} key={item.pizzaId} />
+                    <OrderItem
+                        item={item}
+                        key={randomIntegerGenerator(item.pizzaId, 1)}
+                    />
                 ))}
             </ul>
 
