@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { formatCurrency } from "../../utils/helpers";
 // import CustomButton from "../../ui/CustomButton";
 import DeleteItem from "./DeleteItem";
+import UpdateItemQuantiy from "./UpdateItemQuantiy";
 
 function CartItem({ item }) {
     const { pizzaId, name, quantity, totalPrice } = item;
@@ -16,6 +17,7 @@ function CartItem({ item }) {
                     {formatCurrency(totalPrice)}
                 </p>
                 {/* <CustomButton type="small">Remove</CustomButton> */}
+                <UpdateItemQuantiy pizzaId={pizzaId} />
                 <DeleteItem pizzaId={pizzaId} />
             </div>
         </li>

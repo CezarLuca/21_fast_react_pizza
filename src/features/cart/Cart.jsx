@@ -6,6 +6,7 @@ import CartItem from "./CartItem";
 import EmptyCart from "./EmptyCart";
 import { getUsername } from "../user/userSlice";
 import { clearCart, getCart } from "./cartSlice";
+import { randomIntegerGenerator } from "../../utils/helpers";
 
 // const fakeCart = [
 //     {
@@ -36,6 +37,7 @@ function Cart() {
     const username = useSelector(getUsername);
     // const cart = fakeCart;
     const cart = useSelector(getCart);
+    console.log(cart);
     const dispatch = useDispatch();
 
     function handleClearCart() {
@@ -62,7 +64,13 @@ function Cart() {
 
             <ul className="mt-3 divide-y divide-stone-200 border-b">
                 {cart.map((item) => (
-                    <CartItem key={item.pizzaId * item.quantity} item={item} />
+                    <CartItem
+                        key={randomIntegerGenerator(
+                            item.pizzaId,
+                            item.quantity,
+                        )}
+                        item={item}
+                    />
                 ))}
             </ul>
 
