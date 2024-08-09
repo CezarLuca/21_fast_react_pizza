@@ -75,9 +75,11 @@ const userSlice = createSlice({
                 state.address = action.payload.address;
                 state.status = "idle";
             })
-            .addCase(fetchAdressThunk.rejected, (state, action) => {
+            .addCase(fetchAdressThunk.rejected, (state) => {
                 state.status = "error";
-                state.errors = action.error.message;
+                // state.errors = action.error.message;
+                state.errors =
+                    "There was an error getting your address. Make sure you fill up this field.";
             });
     },
 });

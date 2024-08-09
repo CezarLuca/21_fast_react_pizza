@@ -37,4 +37,6 @@ export default async function createOrderAction({ request }) {
 
     // return null;
     return redirect(`/order/${newOrder.id}`);
+
+    // return null;
 }
