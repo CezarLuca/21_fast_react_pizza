@@ -1,8 +1,8 @@
 // import { useState } from "react";
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import CustomButton from "../../ui/CustomButton";
-import { useSelector } from "react-redux";
-import { getUsername } from "../user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAdressThunk, getUsername } from "../user/userSlice";
 import { getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import { formatCurrency } from "../../utils/helpers";
@@ -48,12 +48,18 @@ function CreateOrder() {
 
     const formErrors = useActionData();
 
+    const dispatch = useDispatch();
+
     // const cart = fakeCart;
     const cart = useSelector(getCart);
     // console.log("cart", cart);
     const totalCartPrice = useSelector(getTotalCartPrice);
     const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
     const totalPrice = totalCartPrice + priorityPrice;
+
+    function handleFetchAddress() {
+        dispatch(fetchAdressThunk());
+    }
 
     if (!cart.length) {
         return <EmptyCart />;
@@ -64,6 +70,8 @@ function CreateOrder() {
             <h2 className="mb-8 text-xl font-semibold">
                 Ready to order? Let&apos;s go!
             </h2>
+
+            <button onClick={handleFetchAddress}>Fetch address</button>
 
             {/* <Form method="POST" action="/order/new"> */}
             <Form method="POST">
