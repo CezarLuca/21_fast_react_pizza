@@ -2,7 +2,7 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import CustomButton from "../../ui/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAdressThunk, getUsername } from "../user/userSlice";
+import { fetchAdressThunk } from "../user/userSlice";
 import { getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import { formatCurrency } from "../../utils/helpers";
@@ -42,7 +42,15 @@ import { useState } from "react";
 function CreateOrder() {
     const [withPriority, setWithPriority] = useState(false);
     // const username = useSelector((state) => state.user.username);
-    const username = useSelector(getUsername);
+    const {
+        username,
+        status: addressStatus,
+        position,
+        address,
+        errors: errorAdress,
+    } = useSelector((state) => state.user);
+    // console.log("errorAdress", errorAdress);
+    const isLoadingAdress = addressStatus === "loading";
     const navigation = useNavigation();
     const isSubmitting = navigation.state === "submitting";
 
@@ -57,7 +65,8 @@ function CreateOrder() {
     const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
     const totalPrice = totalCartPrice + priorityPrice;
 
-    function handleFetchAddress() {
+    function handleFetchAddress(e) {
+        e.preventDefault();
         dispatch(fetchAdressThunk());
     }
 
@@ -70,8 +79,6 @@ function CreateOrder() {
             <h2 className="mb-8 text-xl font-semibold">
                 Ready to order? Let&apos;s go!
             </h2>
-
-            <button onClick={handleFetchAddress}>Fetch address</button>
 
             {/* <Form method="POST" action="/order/new"> */}
             <Form method="POST">
@@ -102,23 +109,62 @@ function CreateOrder() {
                             required
                         />
                         {formErrors?.phone && (
-                            <p className="mt-2 w-full max-w-96 rounded-md bg-red-100 p-2 text-center text-xs text-red-600">
+                            <p className="ml-1.5 mt-2 max-w-96 rounded-md bg-red-100 p-2 text-center text-xs text-red-600">
                                 {formErrors.phone}
                             </p>
                         )}
                     </div>
                 </div>
 
-                <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-                    <label className="sm:basis-40">Address</label>
+                <div className="relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+                    {addressStatus !== "error" ? (
+                        <label className="sm:basis-40">Address</label>
+                    ) : (
+                        <label className="sm:mb-10 sm:basis-40">Address</label>
+                    )}
                     <div className="grow">
                         <input
-                            className="input"
+                            className="input w-full"
                             type="text"
                             name="address"
+                            disabled={isLoadingAdress}
+                            defaultValue={address}
                             required
                         />
+                        {/* <span className="absolute right-2 top-16 sm:top-10"> */}
+                        <span>
+                            {addressStatus === "error" && (
+                                <p className="mt-2 max-w-96 rounded-md bg-red-100 p-2 text-center text-xs text-red-600">
+                                    {errorAdress}
+                                </p>
+                            )}
+                        </span>
                     </div>
+                    {addressStatus !== "error"
+                        ? !position?.latitude &&
+                          !position?.longitude && (
+                              <span className="absolute right-[5px] z-10">
+                                  <CustomButton
+                                      disabled={isLoadingAdress}
+                                      type="small"
+                                      onClick={(e) => handleFetchAddress(e)}
+                                  >
+                                      Get position
+                                  </CustomButton>
+                              </span>
+                          )
+                        : !position?.latitude &&
+                          !position?.longitude && (
+                              <span className="absolute right-[5px] top-[34px] z-10 sm:top-1">
+                                  <CustomButton
+                                      disabled={isLoadingAdress}
+                                      type="small"
+                                      onClick={(e) => handleFetchAddress(e)}
+                                  >
+                                      Get position
+                                  </CustomButton>
+                              </span>
+                          )}
                 </div>
 
                 <div className="mb-12 flex items-center gap-5">
@@ -141,7 +187,10 @@ function CreateOrder() {
                         name="cart"
                         value={JSON.stringify(cart)}
                     />
-                    <CustomButton disabled={isSubmitting} type="primary">
+                    <CustomButton
+                        disabled={isSubmitting || isLoadingAdress}
+                        type="primary"
+                    >
                         {isSubmitting
                             ? "Placing order..."
                             : `Order now for ${formatCurrency(totalPrice)}`}
