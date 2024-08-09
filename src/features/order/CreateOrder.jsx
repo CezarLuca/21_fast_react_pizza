@@ -140,10 +140,10 @@ function CreateOrder() {
                             )}
                         </span>
                     </div>
-                    {addressStatus !== "error"
+                    {/* {addressStatus !== "error"
                         ? !position?.latitude &&
                           !position?.longitude && (
-                              <span className="absolute right-[5px] z-10">
+                              <span className="absolute right-[5px] z-10 sm:top-1">
                                   <CustomButton
                                       disabled={isLoadingAdress}
                                       type="small"
@@ -155,7 +155,7 @@ function CreateOrder() {
                           )
                         : !position?.latitude &&
                           !position?.longitude && (
-                              <span className="absolute right-[5px] top-[34px] z-10 sm:top-1">
+                              <span className="absolute right-[5px] z-10 sm:top-1">
                                   <CustomButton
                                       disabled={isLoadingAdress}
                                       type="small"
@@ -164,7 +164,18 @@ function CreateOrder() {
                                       Get position
                                   </CustomButton>
                               </span>
-                          )}
+                          )} */}
+                    {!position?.latitude && !position?.longitude && (
+                        <span className="absolute bottom-20 right-[5px] z-10 sm:top-1">
+                            <CustomButton
+                                disabled={isLoadingAdress}
+                                type="small"
+                                onClick={(e) => handleFetchAddress(e)}
+                            >
+                                Get position
+                            </CustomButton>
+                        </span>
+                    )}
                 </div>
 
                 <div className="mb-12 flex items-center gap-5">
