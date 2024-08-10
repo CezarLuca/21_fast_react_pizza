@@ -3,6 +3,8 @@ import { formatCurrency } from "../../utils/helpers";
 
 function OrderItem({ item, isLoadingIngredients, ingredients }) {
     const { quantity, name, totalPrice } = item;
+    console.log(isLoadingIngredients);
+    console.log(ingredients);
 
     return (
         <li className="py-3">
@@ -12,6 +14,9 @@ function OrderItem({ item, isLoadingIngredients, ingredients }) {
                 </p>
                 <p className="font-bold">{formatCurrency(totalPrice)}</p>
             </div>
+            <p className="text-sm capitalize italic text-stone-500">
+                {isLoadingIngredients ? "Loading..." : ingredients.join(", ")}
+            </p>
         </li>
     );
 }
@@ -23,13 +28,7 @@ OrderItem.propTypes = {
         totalPrice: PropTypes.number.isRequired,
     }).isRequired,
     isLoadingIngredients: PropTypes.bool,
-    ingredients: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
-        }),
-    ),
+    ingredients: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default OrderItem;
