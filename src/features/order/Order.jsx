@@ -48,6 +48,7 @@ import OrderItem from "./OrderItem";
 function Order() {
     // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
     const order = useLoaderData();
+    // console.log(order);
 
     const {
         id,
@@ -58,6 +59,7 @@ function Order() {
         estimatedDelivery,
         cart,
     } = order;
+    // console.log(order);
     const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
     return (
@@ -92,7 +94,7 @@ function Order() {
                 {cart.map((item) => (
                     <OrderItem
                         item={item}
-                        key={randomIntegerGenerator(item.pizzaId, 1)}
+                        key={`${id}${randomIntegerGenerator(item.pizzaId, 1)}`}
                     />
                 ))}
             </ul>
